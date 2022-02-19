@@ -9,4 +9,9 @@ class Student extends Model
 {
     use HasFactory;
     protected $guarded = [];
+
+    public function getScore()
+    {
+        return $this->hasMany(Score::class, 'student_id');
+    }
 }

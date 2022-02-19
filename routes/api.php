@@ -22,6 +22,7 @@ use App\Http\Controllers\API\ScoreController;
 // });
 Route::group(['middleware' => 'auth:sanctum'], function(){
     //crud student
+    Route::get('/show', [FormController::class, 'show']);
     Route::post('/create', [FormController::class, 'create']);
     Route::get('/edit/{id}', [FormController::class, 'edit']);
     Route::post('/edit/{id}', [FormController::class, 'update']);

@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\Student;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Resources\StudentResource;
 
 class FormController extends Controller
 {
@@ -32,9 +33,11 @@ class FormController extends Controller
     public function edit($id)
     {
         $student = Student::find($id);
+        $studentCollection = new StudentResource($student);
+
         return response()->json([
                 'message'       => 'success',
-                'data_student'  => $student
+                'data_student'  => $studentCollection
             ], 200);
     }
 
@@ -67,5 +70,22 @@ class FormController extends Controller
         return response()->json([
                 'message'       => 'data student berhasil dihapus'
             ], 200);
+    }
+
+    public function show(Request $request)
+    {
+        $perPage = $request->get('per_page');
+
+        $students = Student::paginate($perPage);
+        $collectionStudent = StudentResource::collection($students);
+
+        $dataStudent['data'] = $collectionStudent;
+        $dataStudent['next_page_url'] = $students->nextPageUrl();
+
+        return response()->json([
+                'message'       => 'success',
+                'data_student'  =>  $dataStudent
+            ], 200);
+
     }
 }
