@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\FormController;
 use App\Http\Controllers\API\ScoreController;
+use App\Http\Controllers\API\CustomerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,6 +31,8 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
 
     //crud score with relation to student
     Route::post('/create-score-student', [ScoreController::class, 'create']);
+    //pagination show data ribuan
+    Route::get('/get-data-customer', [CustomerController::class, 'getData']);
 
     Route::get('/logout', [AuthController::class, 'logout']);
 });
